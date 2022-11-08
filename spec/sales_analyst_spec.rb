@@ -378,7 +378,7 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.bottom_merchants_by_invoice_count).to include(merchant)
     end
   end
-
+  # need to write tests for invoice_days and max_invoices_in_a_day
   describe '#top_days_by_invoice_count' do
     it 'returns an array of days as strings that have most invoices in the week' do
       sales_analyst = se.analyst
@@ -478,6 +478,7 @@ RSpec.describe SalesAnalyst do
       sales_analyst = se.analyst
 
       expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
+      expect(sales_analyst.most_sold_items_for_merchant(12334236).first.merchant_id).to eq(12334236)
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
     end
   end

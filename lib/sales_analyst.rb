@@ -117,15 +117,21 @@ class SalesAnalyst
     end
   end
 
-  def top_days_by_invoice_count
-    invoice_days = @invoices.all.map do |invoice|
+  def invoice_days
+    @invoices.all.map do |invoice|
       invoice.created_at.strftime('%A')
     end.tally
-    max_day = invoice_days.max_by do |key, value|
+  end
+
+  def max_invoices_in_a_day
+    invoice_days.max_by do |key, value|
       value
-    end
+    end[1]
+  end
+
+  def top_days_by_invoice_count
     invoice_days.select do |key, value|
-      value == max_day[1]
+      value == max_invoices_in_a_day
     end.keys
   end
 
@@ -162,10 +168,14 @@ class SalesAnalyst
 
   def merchants_items_and_quantities_sold(merchant_id)
     item_quantities = Hash.new(0)
+
     @items.find_all_by_merchant_id(merchant_id).each do |item|
       @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
         if invoice_paid_in_full?(invoice_item.invoice_id)
           item_quantities[item] += invoice_item.quantity
+          # this will also be similar to helper method for best item for merchant
+          # just need to change line above to
+          # `item_quantities[item] += (invoice_item.quantity * invoice_item.unit_price)`
         end
       end
     end
