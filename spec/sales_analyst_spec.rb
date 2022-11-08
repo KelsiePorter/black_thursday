@@ -491,4 +491,15 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.best_item_for_merchant(12334951).merchant_id).to eq(12334951)
     end
   end
+
+  describe 'revenue_by_merchant' do
+    it 'returns the revenue for a giev merchant' do
+      sales_analyst = se.analyst
+
+      expected = sales_analyst.revenue_by_merchant(12334194)
+
+      expect(expected).to eq(BigDecimal(expected))
+      expect(expected.class).to eq(BigDecimal)
+    end
+  end
 end
