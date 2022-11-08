@@ -117,15 +117,21 @@ class SalesAnalyst
     end
   end
 
-  def top_days_by_invoice_count
-    invoice_days = @invoices.all.map do |invoice|
+  def invoice_days
+    @invoices.all.map do |invoice|
       invoice.created_at.strftime('%A')
     end.tally
-    max_day = invoice_days.max_by do |key, value|
+  end
+
+  def max_invoices_in_a_day
+    invoice_days.max_by do |key, value|
       value
-    end
+    end[1]
+  end
+
+  def top_days_by_invoice_count
     invoice_days.select do |key, value|
-      value == max_day[1]
+      value == max_invoices_in_a_day
     end.keys
   end
 
@@ -146,5 +152,56 @@ class SalesAnalyst
     @invoice_items.find_all_by_invoice_id(invoice_id).sum do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
+  end
+
+  def merchant_paid_in_full?(merchant_id)
+    @invoices.find_all_by_merchant_id(merchant_id).all? do |invoice|
+      invoice_paid_in_full?(invoice.id)
+    end
+  end
+
+  def merchants_with_pending_invoices
+    @merchants.all.find_all do |merchant|
+      !merchant_paid_in_full?(merchant.id)
+    end.uniq
+  end
+
+  def merchants_items_and_quantities_sold(merchant_id)
+    item_quantities = Hash.new(0)
+
+    @items.find_all_by_merchant_id(merchant_id).each do |item|
+      @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
+        if invoice_paid_in_full?(invoice_item.invoice_id)
+          item_quantities[item] += invoice_item.quantity
+        end
+      end
+    end
+    item_quantities
+  end
+
+  def most_sold_items_for_merchant(merchant_id)
+    item_quantities = merchants_items_and_quantities_sold(merchant_id)
+    highest_quantity = item_quantities.max_by{|item, quantity| quantity}
+    item_quantities.select do |key, value|
+      value == highest_quantity[1]
+    end.keys
+  end
+
+  def items_and_dollar_amount_sold_for(merchant_id)
+    item_quantities = Hash.new(0)
+
+    @items.find_all_by_merchant_id(merchant_id).each do |item|
+      @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
+        if invoice_paid_in_full?(invoice_item.invoice_id)
+          item_quantities[item] += (invoice_item.quantity * invoice_item.unit_price)
+        end
+      end
+    end
+    item_quantities
+  end
+
+  def best_item_for_merchant(merchant_id)
+    item_dollar_amounts = items_and_dollar_amount_sold_for(merchant_id)
+    item_dollar_amounts.max_by { |item, dollar_amount| dollar_amount }[0]
   end
 end

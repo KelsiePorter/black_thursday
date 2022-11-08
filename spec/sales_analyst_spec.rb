@@ -378,7 +378,7 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.bottom_merchants_by_invoice_count).to include(merchant)
     end
   end
-
+  # need to write tests for invoice_days and max_invoices_in_a_day
   describe '#top_days_by_invoice_count' do
     it 'returns an array of days as strings that have most invoices in the week' do
       sales_analyst = se.analyst
@@ -435,6 +435,60 @@ RSpec.describe SalesAnalyst do
 
       expect(sales_analyst.invoice_total(203)).to eq(0)
       expect(sales_analyst.invoice_total(306)).to eq(BigDecimal(21891.28, 7))
+    end
+  end
+
+  describe '#merchant_paid_in_full?()' do
+    it 'returns true if merchant has a successful payment for all invoices' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.merchant_paid_in_full?(12334236)).to be true
+      expect(sales_analyst.merchant_paid_in_full?(12334159)).to be false
+    end
+  end
+
+  describe '#merchants_with_pending_invoices' do
+    it 'returns array of merchants with pending invoices' do
+      sales_analyst = se.analyst
+
+      sales_analyst.merchants_with_pending_invoices.each do |merchant|
+        expect(merchant).to be_a Merchant
+        expect(sales_analyst.merchant_paid_in_full?(merchant.id)).to be false
+      end
+    end
+  end
+
+  describe '#merchants_items_and_quantities_sold()' do
+    it 'returns a hash of merchants items and qty of item sold' do
+      sales_analyst = se.analyst
+
+      items_and_qty = sales_analyst.merchants_items_and_quantities_sold(12334236)
+      expect(items_and_qty).to be_a Hash
+      items_and_qty.keys.each do |item|
+        expect(item).to be_a Item
+      end
+      items_and_qty.values.each do |qty|
+        expect(qty).to be_a Integer
+      end
+    end
+  end
+
+  describe '#most_sold_items_for_merchant()' do
+    it 'returns the item(s) that merchant has sold highest quantity of' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
+      expect(sales_analyst.most_sold_items_for_merchant(12334236).first.merchant_id).to eq(12334236)
+      expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
+    end
+  end
+
+  describe '#best_item_for_merchant()' do
+    it 'returns the item that generated most revenue for a given merchant' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.best_item_for_merchant(12334951)).to be_a Item
+      expect(sales_analyst.best_item_for_merchant(12334951).merchant_id).to eq(12334951)
     end
   end
 end
