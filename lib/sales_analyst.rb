@@ -4,6 +4,7 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 
 class SalesAnalyst
+  include MakeTime
   attr_reader :items,
               :merchants,
               :invoices,
@@ -229,6 +230,15 @@ class SalesAnalyst
   def merchants_with_only_one_item_registered_in_month(month)
     merchants_with_only_one_item.find_all do |merchant|
       merchant.created_at.month == Time.parse(month).month
+    end
+  end
+
+  def total_revenue_by_date(date)
+    invoices_by_date = @invoices.all.find_all do |invoice|
+      invoice.created_at == return_time_from(date)
+    end
+    invoices_by_date.sum do |invoice| 
+      invoice_total(invoice.id)
     end
   end
 end

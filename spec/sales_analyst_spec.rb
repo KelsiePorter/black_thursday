@@ -545,4 +545,18 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.merchants_with_only_one_item_registered_in_month('March').count).to eq(21)
     end
   end
+ 
+  describe '#total_revenue_by_date()' do
+    it 'returns the total revenue for given date' do
+      sales_analyst = se.analyst
+
+      date = Time.parse("2009-02-07")
+      expected = sales_analyst.total_revenue_by_date(date)
+
+      expect(expected).to eq 21067.77
+      expect(expected.class).to eq(BigDecimal)
+      expect(sales_analyst.total_revenue_by_date(date)).to eq(21067.77.to_d)
+    end
+  end
 end
+
