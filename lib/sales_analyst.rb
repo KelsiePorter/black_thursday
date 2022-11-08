@@ -221,20 +221,8 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item
-    single_item_by_merchant_id = all_items_as_merchant_ids.find_all do |id|
-      all_items_as_merchant_ids.count(id) == 1
-    end
-
-    merchant_ids_to_merchants(single_item_by_merchant_id)
-  end
-
-  def all_items_as_merchant_ids
-    @items.all.map(&:merchant_id)
-  end
-
-  def merchant_ids_to_merchants(merchant_ids)
-    merchant_ids.map do |id|
-      @merchants.find_by_id(id)
+    @merchants.all.find_all do |merchant|
+      @items.find_all_by_merchant_id(merchant.id).size == 1
     end
   end
 end
