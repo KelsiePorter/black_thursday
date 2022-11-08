@@ -505,4 +505,19 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.revenue_by_merchant(12334159)).to eq(137471.17.to_d)
     end
   end
+
+  describe 'top_revenue_earners()' do 
+    it 'returns by default the top 20 merchants ranked by revenue if no argument is given' do
+      sales_analyst = se.analyst
+      expected = sales_analyst.top_revenue_earners
+      first = expected.first
+      last = expected.last
+
+      expect(expected.length).to eq(20)
+      expect(first.class).to eq(Merchant)
+      expect(first.id).to eq(12334634)
+      expect(sales_analyst.top_revenue_earners(5).length).to eq(5)
+      expect(sales_analyst.top_revenue_earners(33).length).to eq(33)
+    end
+  end
 end
