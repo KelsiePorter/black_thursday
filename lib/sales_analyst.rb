@@ -173,9 +173,6 @@ class SalesAnalyst
       @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
         if invoice_paid_in_full?(invoice_item.invoice_id)
           item_quantities[item] += invoice_item.quantity
-          # this will also be similar to helper method for best item for merchant
-          # just need to change line above to
-          # `item_quantities[item] += (invoice_item.quantity * invoice_item.unit_price)`
         end
       end
     end
