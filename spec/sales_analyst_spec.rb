@@ -525,7 +525,6 @@ RSpec.describe SalesAnalyst do
     it 'returns an array of merchants that only have one item' do
       sales_analyst = se.analyst
 
-
       expect(sales_analyst.merchants_with_only_one_item[0].name).to eq('jejum')
       expect(sales_analyst.merchants_with_only_one_item[8].name).to eq('WoodleyShop')
       expect(sales_analyst.merchants_with_only_one_item.count).to eq(243)

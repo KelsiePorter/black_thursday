@@ -221,13 +221,15 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item
-    hash = @items.all.map(&:merchant_id)
-   
-    merchant_ids = hash.find_all do |id|
-      hash.count(id) == 1
+    single_item_by_merchant_id = all_items_as_merchant_ids.find_all do |id|
+      all_items_as_merchant_ids.count(id) == 1
     end
-    
-    convert_merchant_ids_to_merchants(merchant_ids)
+
+    merchant_ids_to_merchants(single_item_by_merchant_id)
+  end
+
+  def all_items_as_merchant_ids
+    @items.all.map(&:merchant_id)
   end
 
   def merchant_ids_to_merchants(merchant_ids)
