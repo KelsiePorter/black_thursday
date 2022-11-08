@@ -437,4 +437,14 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.invoice_total(306)).to eq(BigDecimal(21891.28, 7))
     end
   end
+
+  describe '#merchants_with_pending_invoices' do
+    it 'returns array of merchants with pending invoices' do
+      sales_analyst = se.analyst
+      
+      sales_analyst.merchants_with_pending_invoices.each do |merchant|
+        expect(merchant).to be_a Merchant
+      end
+    end
+  end
 end

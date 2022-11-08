@@ -147,4 +147,16 @@ class SalesAnalyst
       invoice_item.unit_price * invoice_item.quantity
     end
   end
+
+  def merchant_paid_in_full?(merchant_id)
+    @invoices.find_all_by_merchant_id(merchant_id).all? do |invoice|
+      invoice_paid_in_full?(invoice.id)
+    end
+  end
+
+  def merchants_with_pending_invoices
+    @merchants.all.find_all do |merchant|
+      !merchant_paid_in_full?(merchant.id)
+    end.uniq
+  end
 end
