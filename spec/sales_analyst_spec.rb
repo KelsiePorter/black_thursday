@@ -441,7 +441,7 @@ RSpec.describe SalesAnalyst do
   describe '#merchant_paid_in_full?()' do
     it 'returns true if merchant has a successful payment for all invoices' do
       sales_analyst = se.analyst
-      
+
       expect(sales_analyst.merchant_paid_in_full?(12334236)).to be true
       expect(sales_analyst.merchant_paid_in_full?(12334159)).to be false
     end
@@ -453,7 +453,17 @@ RSpec.describe SalesAnalyst do
 
       sales_analyst.merchants_with_pending_invoices.each do |merchant|
         expect(merchant).to be_a Merchant
+        expect(sales_analyst.merchant_paid_in_full?(merchant.id)).to be false
       end
+    end
+  end
+
+  describe '#most_sold_items_for_merchant()' do
+    it 'returns the item(s) that merchant has sold highest quantity of' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
+      expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
     end
   end
 end
