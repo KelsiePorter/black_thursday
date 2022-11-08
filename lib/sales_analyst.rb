@@ -189,4 +189,22 @@ class SalesAnalyst
       value == highest_quantity[1]
     end.keys
   end
+
+  def items_and_dollar_amount_sold_for(merchant_id)
+    item_quantities = Hash.new(0)
+
+    @items.find_all_by_merchant_id(merchant_id).each do |item|
+      @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
+        if invoice_paid_in_full?(invoice_item.invoice_id)
+          item_quantities[item] += (invoice_item.quantity * invoice_item.unit_price)
+        end
+      end
+    end
+    item_quantities
+  end
+
+  def best_item_for_merchant(merchant_id)
+    item_dollar_amounts = items_and_dollar_amount_sold_for(merchant_id)
+    item_dollar_amounts.max_by { |item, dollar_amount| dollar_amount }[0]
+  end
 end

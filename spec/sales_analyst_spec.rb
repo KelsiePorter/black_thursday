@@ -482,4 +482,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
     end
   end
+
+  describe '#best_item_for_merchant()' do
+    it 'returns the item that generated most revenue for a given merchant' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.best_item_for_merchant(12334951)).to be_a Item
+      expect(sales_analyst.best_item_for_merchant(12334951).merchant_id).to eq(12334951)
+    end
+  end
 end
