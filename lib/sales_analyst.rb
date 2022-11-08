@@ -211,4 +211,11 @@ class SalesAnalyst
       invoice_total(invoice.id)
     end
   end
+
+  def top_revenue_earners(x = 20)
+    sorted_merchants = @merchants.all.sort_by do |merchant|
+      revenue_by_merchant(merchant.id)
+    end
+    sorted_merchants.reverse[0...x]
+  end
 end
