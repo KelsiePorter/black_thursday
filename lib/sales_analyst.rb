@@ -160,7 +160,7 @@ class SalesAnalyst
     end.uniq
   end
 
-  def most_sold_items_for_merchant(merchant_id)
+  def item_quantities_sold_for_merchant(merchant_id)
     item_quantities = Hash.new(0)
     # gets all of the items of a merchant and starts going thru each
     @items.find_all_by_merchant_id(merchant_id).each do |item|
@@ -172,9 +172,12 @@ class SalesAnalyst
         end
       end
     end
-    # find the highest quantity in hash
+    item_quantities
+  end
+
+  def most_sold_items_for_merchant(merchant_id)
+    item_quantities = item_quantities_sold_for_merchant(merchant_id)
     highest_quantity = item_quantities.max_by{|item, quantity| quantity}
-    # go through each item and return the keys for highest item(s)
     item_quantities.select do |key, value|
       value == highest_quantity[1]
     end.keys
