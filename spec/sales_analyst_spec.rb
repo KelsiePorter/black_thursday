@@ -458,11 +458,11 @@ RSpec.describe SalesAnalyst do
     end
   end
 
-  describe '#item_quantities_sold_for_merchant()' do
+  describe '#merchants_items_and_quantities_sold()' do
     it 'returns a hash of merchants items and qty of item sold' do
       sales_analyst = se.analyst
 
-      items_and_qty = sales_analyst.item_quantities_sold_for_merchant(12334236)
+      items_and_qty = sales_analyst.merchants_items_and_quantities_sold(12334236)
       expect(items_and_qty).to be_a Hash
       items_and_qty.keys.each do |item|
         expect(item).to be_a Item
