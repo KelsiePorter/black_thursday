@@ -438,10 +438,19 @@ RSpec.describe SalesAnalyst do
     end
   end
 
+  describe '#merchant_paid_in_full?()' do
+    it 'returns true if merchant has a successful payment for all invoices' do
+      sales_analyst = se.analyst
+      
+      expect(sales_analyst.merchant_paid_in_full?(12334236)).to be true
+      expect(sales_analyst.merchant_paid_in_full?(12334159)).to be false
+    end
+  end
+
   describe '#merchants_with_pending_invoices' do
     it 'returns array of merchants with pending invoices' do
       sales_analyst = se.analyst
-      
+
       sales_analyst.merchants_with_pending_invoices.each do |merchant|
         expect(merchant).to be_a Merchant
       end
