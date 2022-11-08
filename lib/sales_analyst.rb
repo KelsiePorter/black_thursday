@@ -2,6 +2,7 @@
 
 require 'bigdecimal'
 require 'bigdecimal/util'
+
 class SalesAnalyst
   attr_reader :items,
               :merchants,
@@ -60,7 +61,6 @@ class SalesAnalyst
       average_item_price_for_merchant(merchant.id)
     end
     (total_of_averages / @merchants.all.size).floor(2)
-    # floor passes the spec harness- thats the only reason its here...
   end
 
   def average_item_price
@@ -149,6 +149,7 @@ class SalesAnalyst
 
   def invoice_total(invoice_id)
     return 0 unless invoice_paid_in_full?(invoice_id)
+
     @invoice_items.find_all_by_invoice_id(invoice_id).sum do |invoice_item|
       invoice_item.unit_price * invoice_item.quantity
     end
@@ -217,5 +218,21 @@ class SalesAnalyst
       revenue_by_merchant(merchant.id)
     end
     sorted_merchants.reverse[0...x]
+  end
+
+  def merchants_with_only_one_item
+    hash = @items.all.map(&:merchant_id)
+   
+    merchant_ids = hash.find_all do |id|
+      hash.count(id) == 1
+    end
+    
+    convert_merchant_ids_to_merchants(merchant_ids)
+  end
+
+  def merchant_ids_to_merchants(merchant_ids)
+    merchant_ids.map do |id|
+      @merchants.find_by_id(id)
+    end
   end
 end
