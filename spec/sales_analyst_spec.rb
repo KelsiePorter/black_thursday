@@ -461,7 +461,7 @@ RSpec.describe SalesAnalyst do
   describe '#most_sold_items_for_merchant()' do
     it 'returns the item(s) that merchant has sold highest quantity of' do
       sales_analyst = se.analyst
-
+      
       expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
     end
