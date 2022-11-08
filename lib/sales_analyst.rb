@@ -162,11 +162,8 @@ class SalesAnalyst
 
   def item_quantities_sold_for_merchant(merchant_id)
     item_quantities = Hash.new(0)
-    # gets all of the items of a merchant and starts going thru each
     @items.find_all_by_merchant_id(merchant_id).each do |item|
-      # gets all invoice items for each item and starts going through each
       @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
-        # if the corresponding invoice is paid proceed to add quanity to item
         if invoice_paid_in_full?(invoice_item.invoice_id)
           item_quantities[item] += invoice_item.quantity
         end

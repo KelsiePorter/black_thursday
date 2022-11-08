@@ -458,10 +458,25 @@ RSpec.describe SalesAnalyst do
     end
   end
 
+  describe '#item_quantities_sold_for_merchant()' do
+    it 'returns a hash of merchants items and qty of item sold' do
+      sales_analyst = se.analyst
+
+      items_and_qty = sales_analyst.item_quantities_sold_for_merchant(12334236)
+      expect(items_and_qty).to be_a Hash
+      items_and_qty.keys.each do |item|
+        expect(item).to be_a Item
+      end
+      items_and_qty.values.each do |qty|
+        expect(qty).to be_a Integer
+      end
+    end
+  end
+
   describe '#most_sold_items_for_merchant()' do
     it 'returns the item(s) that merchant has sold highest quantity of' do
       sales_analyst = se.analyst
-  
+
       expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
     end
