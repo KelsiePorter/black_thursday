@@ -535,4 +535,14 @@ RSpec.describe SalesAnalyst do
       expect(expectation.count).to eq(1)
     end
   end
+
+  describe '#merchants_with_only_one_item_registered_in_month()' do
+    it 'returns merchants who only have one item registered in given month' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('January').count).to eq(19)
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('February').count).to eq(19)
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('March').count).to eq(21)
+    end
+  end
 end
