@@ -11,6 +11,7 @@ require_relative '../lib/customer_repository'
 require_relative '../lib/sales_engine'
 require_relative '../lib/sales_analyst'
 require 'bigdecimal'
+require 'bigdecimal/util'
 
 RSpec.describe SalesAnalyst do
   let(:se) {SalesEngine.from_csv({
@@ -489,6 +490,34 @@ RSpec.describe SalesAnalyst do
 
       expect(sales_analyst.best_item_for_merchant(12334951)).to be_a Item
       expect(sales_analyst.best_item_for_merchant(12334951).merchant_id).to eq(12334951)
+    end
+  end
+
+  describe 'revenue_by_merchant()' do
+    it 'returns the revenue for a given merchant' do
+      sales_analyst = se.analyst
+
+      expected = sales_analyst.revenue_by_merchant(12334194)
+
+      expect(expected).to eq(BigDecimal(expected))
+      expect(expected.class).to eq(BigDecimal)
+      expect(sales_analyst.revenue_by_merchant(12334194)).to eq(81572.4.to_d)
+      expect(sales_analyst.revenue_by_merchant(12334159)).to eq(137471.17.to_d)
+    end
+  end
+
+  describe 'top_revenue_earners()' do 
+    it 'returns by default the top 20 merchants ranked by revenue if no argument is given' do
+      sales_analyst = se.analyst
+      expected = sales_analyst.top_revenue_earners
+      first = expected.first
+      last = expected.last
+
+      expect(expected.length).to eq(20)
+      expect(first.class).to eq(Merchant)
+      expect(first.id).to eq(12334634)
+      expect(sales_analyst.top_revenue_earners(5).length).to eq(5)
+      expect(sales_analyst.top_revenue_earners(33).length).to eq(33)
     end
   end
 end
