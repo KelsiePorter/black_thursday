@@ -7,10 +7,10 @@ RSpec.describe InvoiceItem do
                       :item_id => 7,
                       :invoice_id => 8,
                       :quantity => 1,
-                      :unit_price => BigDecimal("1099",4),
+                      :unit_price => BigDecimal("1099", 4),
                       :created_at => Time.now,
                       :updated_at => Time.now
-                    })}
+                    }) }
 
   describe '#initialize' do
     it 'exists' do

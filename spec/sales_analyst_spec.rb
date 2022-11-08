@@ -520,4 +520,29 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.top_revenue_earners(33).length).to eq(33)
     end
   end
+
+  describe '#merchants_with_only_one_item' do
+    it 'returns an array of merchants that only have one item' do
+      sales_analyst = se.analyst
+
+      expectation = sales_analyst.merchants_with_only_one_item.select do |merchant|
+        merchant.name == 'jejum'
+      end
+
+      expect(sales_analyst.merchants_with_only_one_item[0]).to be_a Merchant
+      expect(sales_analyst.merchants_with_only_one_item.count).to eq(243)
+      expect(expectation.first.name).to eq('jejum')
+      expect(expectation.count).to eq(1)
+    end
+  end
+
+  describe '#merchants_with_only_one_item_registered_in_month()' do
+    it 'returns merchants who only have one item registered in given month' do
+      sales_analyst = se.analyst
+
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('January').count).to eq(19)
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('February').count).to eq(19)
+      expect(sales_analyst.merchants_with_only_one_item_registered_in_month('March').count).to eq(21)
+    end
+  end
 end
