@@ -204,4 +204,11 @@ class SalesAnalyst
     item_dollar_amounts = items_and_dollar_amount_sold_for(merchant_id)
     item_dollar_amounts.max_by { |item, dollar_amount| dollar_amount }[0]
   end
+
+  def revenue_by_merchant(merchant_id)
+    merchant_invoices = @invoices.find_all_by_merchant_id(merchant_id)
+    merchant_invoices.sum do |invoice|
+      invoice_total(invoice.id)
+    end
+  end
 end
