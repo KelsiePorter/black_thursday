@@ -11,6 +11,7 @@ require_relative '../lib/customer_repository'
 require_relative '../lib/sales_engine'
 require_relative '../lib/sales_analyst'
 require 'bigdecimal'
+require 'bigdecimal/util'
 
 RSpec.describe SalesAnalyst do
   let(:se) {SalesEngine.from_csv({
@@ -492,14 +493,16 @@ RSpec.describe SalesAnalyst do
     end
   end
 
-  describe 'revenue_by_merchant' do
-    it 'returns the revenue for a giev merchant' do
+  describe 'revenue_by_merchant()' do
+    it 'returns the revenue for a given merchant' do
       sales_analyst = se.analyst
 
       expected = sales_analyst.revenue_by_merchant(12334194)
 
       expect(expected).to eq(BigDecimal(expected))
       expect(expected.class).to eq(BigDecimal)
+      expect(sales_analyst.revenue_by_merchant(12334194)).to eq(81572.4.to_d)
+      expect(sales_analyst.revenue_by_merchant(12334159)).to eq(137471.17.to_d)
     end
   end
 end
