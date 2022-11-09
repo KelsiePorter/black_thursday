@@ -27,9 +27,9 @@ class SalesAnalyst
 
   def average_items_per_merchant_standard_deviation
     mean = average_items_per_merchant
-    sum = array_of_items_per_merchant.sum(0.0) { |element| (element - mean) ** 2 }
+    sum = array_of_items_per_merchant.sum(0.0) { |element| (element - mean)**2 }
     variance = sum / (@merchants.all.size - 1)
-    return Math.sqrt(variance).round(2)
+    Math.sqrt(variance).round(2)
   end
 
   def array_of_items_per_merchant
@@ -50,9 +50,7 @@ class SalesAnalyst
   end
 
   def average_item_price_for_merchant(merchant_id)
-    sum_of_items = @items.find_all_by_merchant_id(merchant_id).sum do |item|
-      item.unit_price
-    end
+    sum_of_items = @items.find_all_by_merchant_id(merchant_id).sum(&:unit_price)
     number_of_items = @items.find_all_by_merchant_id(merchant_id).size
     (sum_of_items / number_of_items).round(2)
   end
@@ -71,9 +69,9 @@ class SalesAnalyst
 
   def average_item_price_std_dev
     mean = average_item_price
-    sum = array_of_items_price.sum(0.0) { |element| (element - mean) ** 2 }
+    sum = array_of_items_price.sum(0.0) { |element| (element - mean)**2 }
     variance = sum / (@items.all.size - 1)
-    return Math.sqrt(variance).round(2)
+    Math.sqrt(variance).round(2)
   end
 
   def array_of_items_price
@@ -99,9 +97,9 @@ class SalesAnalyst
 
   def average_invoices_per_merchant_standard_deviation
     mean = average_invoices_per_merchant
-    sum = invoices_for_each_of_the_merchants.sum(0.00) { |element| (element - mean) ** 2 }
+    sum = invoices_for_each_of_the_merchants.sum(0.00) { |element| (element - mean)**2 }
     variance = sum / (@merchants.all.size - 1)
-    return Math.sqrt(variance).round(2)
+    Math.sqrt(variance).round(2)
   end
 
   def top_merchants_by_invoice_count
@@ -125,13 +123,13 @@ class SalesAnalyst
   end
 
   def max_invoices_in_a_day
-    invoice_days.max_by do |key, value|
+    invoice_days.max_by do |_key, value|
       value
     end[1]
   end
 
   def top_days_by_invoice_count
-    invoice_days.select do |key, value|
+    invoice_days.select do |_key, value|
       value == max_invoices_in_a_day
     end.keys
   end
@@ -173,9 +171,7 @@ class SalesAnalyst
 
     @items.find_all_by_merchant_id(merchant_id).each do |item|
       @invoice_items.find_all_by_item_id(item.id).each do |invoice_item|
-        if invoice_paid_in_full?(invoice_item.invoice_id)
-          item_quantities[item] += invoice_item.quantity
-        end
+        item_quantities[item] += invoice_item.quantity if invoice_paid_in_full?(invoice_item.invoice_id)
       end
     end
     item_quantities
@@ -183,8 +179,8 @@ class SalesAnalyst
 
   def most_sold_items_for_merchant(merchant_id)
     item_quantities = merchants_items_and_quantities_sold(merchant_id)
-    highest_quantity = item_quantities.max_by{|item, quantity| quantity}
-    item_quantities.select do |key, value|
+    highest_quantity = item_quantities.max_by { |_item, quantity| quantity }
+    item_quantities.select do |_key, value|
       value == highest_quantity[1]
     end.keys
   end
@@ -204,7 +200,7 @@ class SalesAnalyst
 
   def best_item_for_merchant(merchant_id)
     item_dollar_amounts = items_and_dollar_amount_sold_for(merchant_id)
-    item_dollar_amounts.max_by { |item, dollar_amount| dollar_amount }[0]
+    item_dollar_amounts.max_by { |_item, dollar_amount| dollar_amount }[0]
   end
 
   def revenue_by_merchant(merchant_id)
@@ -237,7 +233,7 @@ class SalesAnalyst
     invoices_by_date = @invoices.all.find_all do |invoice|
       invoice.created_at == return_time_from(date)
     end
-    invoices_by_date.sum do |invoice| 
+    invoices_by_date.sum do |invoice|
       invoice_total(invoice.id)
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'repository'
 
 class TransactionRepository < Repository
@@ -6,7 +8,7 @@ class TransactionRepository < Repository
       item.invoice_id == invoice_id
     end
   end
-  
+
   def find_all_by_credit_card_number(credit_card_number)
     @all.find_all do |number|
       number.credit_card_number == credit_card_number

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'make_time'
 require 'bigdecimal'
 require 'time'

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'make_time'
 
 class Merchant
-  include MakeTime 
+  include MakeTime
 
   attr_accessor :name
   attr_reader   :id, :created_at
