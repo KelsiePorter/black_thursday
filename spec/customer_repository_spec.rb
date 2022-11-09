@@ -3,29 +3,37 @@ require_relative '../lib/customer_repository'
 
 RSpec.describe CustomerRepository do
   let(:cr) { CustomerRepository.new }
-  let(:customer_1) { Customer.new({ id: 6,
-                                    first_name: 'Joan',
-                                    last_name: 'Clarke',
-                                    created_at:  Time.now,
-                                    updated_at:  Time.now }) }
+  let(:customer_1) do
+    Customer.new({ id: 6,
+                   first_name: 'Joan',
+                   last_name: 'Clarke',
+                   created_at: Time.now,
+                   updated_at: Time.now })
+  end
 
-  let(:customer_2) { Customer.new({ id: 2,
-                                    first_name: 'Michael',
-                                    last_name: 'Clarke',
-                                    created_at: Time.now,
-                                    updated_at: Time.now }) }
+  let(:customer_2) do
+    Customer.new({ id: 2,
+                   first_name: 'Michael',
+                   last_name: 'Clarke',
+                   created_at: Time.now,
+                   updated_at: Time.now })
+  end
 
-  let(:customer_3) { Customer.new({ id: 8,
-                                    first_name: 'Argo',
-                                    last_name: 'Angus',
-                                    created_at: Time.now,
-                                    updated_at: Time.now }) }
+  let(:customer_3) do
+    Customer.new({ id: 8,
+                   first_name: 'Argo',
+                   last_name: 'Angus',
+                   created_at: Time.now,
+                   updated_at: Time.now })
+  end
 
-  let(:customer_4) { Customer.new({ id: 9,
-                                    first_name: 'Argo',
-                                    last_name: 'Angus',
-                                    created_at: Time.now,
-                                    updated_at: Time.now }) }
+  let(:customer_4) do
+    Customer.new({ id: 9,
+                   first_name: 'Argo',
+                   last_name: 'Angus',
+                   created_at: Time.now,
+                   updated_at: Time.now })
+  end
 
   describe '#initialize' do
     it 'exists' do
@@ -86,26 +94,28 @@ RSpec.describe CustomerRepository do
 
   describe 'create(attributes)' do
     it 'creates a new Customer instance with provided attributes' do
-      expect(cr.all).to eq([]) 
+      expect(cr.all).to eq([])
 
       cr.add_to_repo(customer_1)
       expect(cr.all.count).to eq(1)
 
-      cr.create({ 
-        first_name: 'Tron',
-        last_name: 'Carter',
-        created_at:  Time.now,
-        updated_at:  Time.now })
+      cr.create({
+                  first_name: 'Tron',
+                  last_name: 'Carter',
+                  created_at: Time.now,
+                  updated_at: Time.now
+                })
 
       expect(cr.all.count).to eq(2)
       expect(cr.all[1].id).to eq(7)
       expect(cr.all[1].first_name).to eq('Tron')
 
-      cr.create({ 
-        first_name: 'Kathy',
-        last_name: 'Peterson',
-        created_at:  Time.now,
-        updated_at:  Time.now })
+      cr.create({
+                  first_name: 'Kathy',
+                  last_name: 'Peterson',
+                  created_at: Time.now,
+                  updated_at: Time.now
+                })
 
       expect(cr.all.count).to eq(3)
       expect(cr.all[2].first_name).to eq('Kathy')

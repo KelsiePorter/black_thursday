@@ -14,23 +14,24 @@ require 'bigdecimal'
 require 'bigdecimal/util'
 
 RSpec.describe SalesAnalyst do
-  let(:se) {SalesEngine.from_csv({
-    items: "./data/items.csv",
-    merchants: "./data/merchants.csv",
-    invoices: "./data/invoices.csv",
-    customers: "./data/customers.csv",
-    invoice_items: "./data/invoice_items.csv",
-    transactions: "./data/transactions.csv"
-    }) }
+  let(:se) do
+    SalesEngine.from_csv({
+                           items: './data/items.csv',
+                           merchants: './data/merchants.csv',
+                           invoices: './data/invoices.csv',
+                           customers: './data/customers.csv',
+                           invoice_items: './data/invoice_items.csv',
+                           transactions: './data/transactions.csv'
+                         })
+  end
 
   it 'exists' do
-    sales_analyst = SalesAnalyst.new( ItemRepository.new,
-                                      MerchantRepository.new,
-                                      InvoiceRepository.new,
-                                      CustomerRepository.new,
-                                      InvoiceItemRepository.new,
-                                      TransactionRepository.new,
-                                    )
+    sales_analyst = SalesAnalyst.new(ItemRepository.new,
+                                     MerchantRepository.new,
+                                     InvoiceRepository.new,
+                                     CustomerRepository.new,
+                                     InvoiceItemRepository.new,
+                                     TransactionRepository.new)
 
     expect(sales_analyst).to be_a(SalesAnalyst)
   end
@@ -48,36 +49,40 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_items_per_merchant).to eq(2.88)
 
       sales_analyst.items.create({
-        :name        => "Eraser",
-        :description => "Erases pencil markings",
-        :unit_price  => BigDecimal(2.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Eraser',
+                                   description: 'Erases pencil markings',
+                                   unit_price: BigDecimal(2.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(3.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Ball Point Pen',
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(3.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(103.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Fountain Pen',
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(103.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Mike Tyson's Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(30_000.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Mike Tyson's Ball Point Pen",
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(30_000.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_items_per_merchant).to eq(2.89)
     end
@@ -90,36 +95,40 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_items_per_merchant_standard_deviation).to eq(3.26)
 
       sales_analyst.items.create({
-        :name        => "Eraser",
-        :description => "Erases pencil markings",
-        :unit_price  => BigDecimal(2.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Eraser',
+                                   description: 'Erases pencil markings',
+                                   unit_price: BigDecimal(2.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(3.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Ball Point Pen',
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(3.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(103.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Fountain Pen',
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(103.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       sales_analyst.items.create({
-        :name        => "Mike Tyson's Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(30_000.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Mike Tyson's Ball Point Pen",
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(30_000.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_items_per_merchant_standard_deviation).to eq(3.28)
     end
@@ -150,13 +159,16 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.merchants_with_high_item_count.size).to be <= (475 * 0.16)
       expect(sales_analyst.merchants_with_high_item_count).not_to include(merchant)
 
-      10.times { sales_analyst.items.create({
-        :name        => "Amazing YoYo",
-        :description => "It returns to you when you throw it",
-        :unit_price  => BigDecimal(5.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334160}) }
+      10.times do
+        sales_analyst.items.create({
+                                     name: 'Amazing YoYo',
+                                     description: 'It returns to you when you throw it',
+                                     unit_price: BigDecimal(5.99, 4),
+                                     created_at: Time.now,
+                                     updated_at: Time.now,
+                                     merchant_id: 12334160
+                                   })
+      end
 
       expect(sales_analyst.merchants_with_high_item_count).to include(merchant)
     end
@@ -169,13 +181,16 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.avg_plus_std_dev).to be_a Integer
       expect(sales_analyst.avg_plus_std_dev).to eq(6)
 
-      60.times { sales_analyst.items.create({
-        :name        => "Mike Tyson's Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(30_000.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159}) }
+      60.times do
+        sales_analyst.items.create({
+                                     name: "Mike Tyson's Ball Point Pen",
+                                     description: 'Makes permanent markings',
+                                     unit_price: BigDecimal(30_000.99, 4),
+                                     created_at: Time.now,
+                                     updated_at: Time.now,
+                                     merchant_id: 12334159
+                                   })
+      end
 
       expect(sales_analyst.avg_plus_std_dev).to eq(7)
     end
@@ -190,12 +205,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_item_price_for_merchant(12334174).to_f).to eq(30.0)
 
       sales_analyst.items.create({
-        :name        => "Mike Tyson's Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(30_000.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Mike Tyson's Ball Point Pen",
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(30_000.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_item_price_for_merchant(12334159).to_f).to eq(55.91)
     end
@@ -209,12 +225,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_average_price_per_merchant.to_f).to eq(350.29)
 
       sales_analyst.items.create({
-        :name        => "Abraham Lincoln's Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(523_300.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Abraham Lincoln's Fountain Pen",
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(523_300.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_average_price_per_merchant.to_f).to eq(351.29)
     end
@@ -228,12 +245,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_item_price.to_f.round(2)).to eq(251.06)
 
       sales_analyst.items.create({
-        :name        => "Abraham Lincoln's Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(523_300.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Abraham Lincoln's Fountain Pen",
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(523_300.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_item_price.to_f.round(2)).to eq(254.70)
     end
@@ -246,12 +264,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.average_item_price_std_dev).to eq(2901.08)
 
       sales_analyst.items.create({
-        :name        => "Abraham Lincoln's Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(523_300.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Abraham Lincoln's Fountain Pen",
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(523_300.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.average_item_price_std_dev).to eq(2903.14)
     end
@@ -264,12 +283,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.array_of_items_price.size).to eq(1367)
 
       sales_analyst.items.create({
-        :name        => "Ball Point Pen",
-        :description => "Makes permanent markings",
-        :unit_price  => BigDecimal(3.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: 'Ball Point Pen',
+                                   description: 'Makes permanent markings',
+                                   unit_price: BigDecimal(3.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.array_of_items_price.size).to eq(1368)
       expect(sales_analyst.array_of_items_price.last).to eq(0.399e-1)
@@ -289,12 +309,13 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.golden_items.size).to eq(5)
 
       sales_analyst.items.create({
-        :name        => "Abraham Lincoln's Fountain Pen",
-        :description => "Makes artisinal permanent markings",
-        :unit_price  => BigDecimal(1_523_300.99,4),
-        :created_at  => Time.now,
-        :updated_at  => Time.now,
-        :merchant_id => 12334159})
+                                   name: "Abraham Lincoln's Fountain Pen",
+                                   description: 'Makes artisinal permanent markings',
+                                   unit_price: BigDecimal(1_523_300.99, 4),
+                                   created_at: Time.now,
+                                   updated_at: Time.now,
+                                   merchant_id: 12334159
+                                 })
 
       expect(sales_analyst.golden_items.size).to eq(6)
     end
@@ -306,12 +327,15 @@ RSpec.describe SalesAnalyst do
 
       expect(sales_analyst.average_invoices_per_merchant).to eq(10.49)
 
-      10.times { sales_analyst.invoices.create({
-                                  customer_id: 8,
-                                  merchant_id: 12334159,
-                                  status: 'returned',
-                                  created_at: Time.now,
-                                  updated_at: Time.now })}
+      10.times do
+        sales_analyst.invoices.create({
+                                        customer_id: 8,
+                                        merchant_id: 12334159,
+                                        status: 'returned',
+                                        created_at: Time.now,
+                                        updated_at: Time.now
+                                      })
+      end
 
       expect(sales_analyst.average_invoices_per_merchant).to eq(10.52)
     end
@@ -332,12 +356,15 @@ RSpec.describe SalesAnalyst do
 
       expect(sales_analyst.average_invoices_per_merchant_standard_deviation).to eq(3.29)
 
-      10.times { sales_analyst.invoices.create({
-                                  customer_id: 8,
-                                  merchant_id: 12334159,
-                                  status: 'returned',
-                                  created_at: Time.now,
-                                  updated_at: Time.now })}
+      10.times do
+        sales_analyst.invoices.create({
+                                        customer_id: 8,
+                                        merchant_id: 12334159,
+                                        status: 'returned',
+                                        created_at: Time.now,
+                                        updated_at: Time.now
+                                      })
+      end
 
       expect(sales_analyst.average_invoices_per_merchant_standard_deviation).to eq(3.34)
     end
@@ -353,12 +380,15 @@ RSpec.describe SalesAnalyst do
       end
       expect(sales_analyst.top_merchants_by_invoice_count).not_to include(sales_analyst.merchants.find_by_id(12334159))
 
-      11.times { sales_analyst.invoices.create({
-                                  customer_id: 8,
-                                  merchant_id: 12334159,
-                                  status: 'returned',
-                                  created_at: Time.now,
-                                  updated_at: Time.now })}
+      11.times do
+        sales_analyst.invoices.create({
+                                        customer_id: 8,
+                                        merchant_id: 12334159,
+                                        status: 'returned',
+                                        created_at: Time.now,
+                                        updated_at: Time.now
+                                      })
+      end
 
       expect(sales_analyst.top_merchants_by_invoice_count).to include(sales_analyst.merchants.find_by_id(12334159))
     end
@@ -373,7 +403,7 @@ RSpec.describe SalesAnalyst do
         expect(merchant).to be_a Merchant
       end
 
-      sales_analyst.merchants.create({ name: 'Press Coffee'})
+      sales_analyst.merchants.create({ name: 'Press Coffee' })
       merchant = sales_analyst.merchants.find_by_name('Press Coffee')
 
       expect(sales_analyst.bottom_merchants_by_invoice_count).to include(merchant)
@@ -384,16 +414,19 @@ RSpec.describe SalesAnalyst do
     it 'returns an array of days as strings that have most invoices in the week' do
       sales_analyst = se.analyst
 
-      expect(sales_analyst.top_days_by_invoice_count).to eq ["Wednesday"]
+      expect(sales_analyst.top_days_by_invoice_count).to eq ['Wednesday']
 
-      45.times { sales_analyst.invoices.create({
-                                  customer_id: 8,
-                                  merchant_id: 12334159,
-                                  status: 'returned',
-                                  created_at: Time.parse("2022-11-07 08:26:45.880153 -0700"),
-                                  updated_at: Time.now })}
+      45.times do
+        sales_analyst.invoices.create({
+                                        customer_id: 8,
+                                        merchant_id: 12334159,
+                                        status: 'returned',
+                                        created_at: Time.parse('2022-11-07 08:26:45.880153 -0700'),
+                                        updated_at: Time.now
+                                      })
+      end
 
-      expect(sales_analyst.top_days_by_invoice_count).to include("Monday", "Wednesday")
+      expect(sales_analyst.top_days_by_invoice_count).to include('Monday', 'Wednesday')
     end
   end
 
@@ -405,12 +438,15 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.invoice_status(:pending)).to eq(29.55)
       expect(sales_analyst.invoice_status(:returned)).to eq(13.5)
 
-      30.times { sales_analyst.invoices.create({
-                                  customer_id: 8,
-                                  merchant_id: 12334159,
-                                  status: 'returned',
-                                  created_at: Time.parse("2022-11-07 08:26:45.880153 -0700"),
-                                  updated_at: Time.now })}
+      30.times do
+        sales_analyst.invoices.create({
+                                        customer_id: 8,
+                                        merchant_id: 12334159,
+                                        status: 'returned',
+                                        created_at: Time.parse('2022-11-07 08:26:45.880153 -0700'),
+                                        updated_at: Time.now
+                                      })
+      end
 
       expect(sales_analyst.invoice_status(:shipped)).to eq(56.61)
       expect(sales_analyst.invoice_status(:pending)).to eq(29.37)
@@ -506,7 +542,7 @@ RSpec.describe SalesAnalyst do
     end
   end
 
-  describe 'top_revenue_earners()' do 
+  describe 'top_revenue_earners()' do
     it 'returns by default the top 20 merchants ranked by revenue if no argument is given' do
       sales_analyst = se.analyst
       expected = sales_analyst.top_revenue_earners
@@ -545,12 +581,12 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.merchants_with_only_one_item_registered_in_month('March').count).to eq(21)
     end
   end
- 
+
   describe '#total_revenue_by_date()' do
     it 'returns the total revenue for given date' do
       sales_analyst = se.analyst
 
-      date = Time.parse("2009-02-07")
+      date = Time.parse('2009-02-07')
       expected = sales_analyst.total_revenue_by_date(date)
 
       expect(expected).to eq 21067.77
@@ -559,4 +595,3 @@ RSpec.describe SalesAnalyst do
     end
   end
 end
-

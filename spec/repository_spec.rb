@@ -10,8 +10,8 @@ RSpec.describe Repository do
 
   describe '#add to repo' do
     it 'can add an instance to repo' do
-      invoice_1 = double("Thing")
-      invoice_2 = double("Thing2")
+      invoice_1 = double('Thing')
+      invoice_2 = double('Thing2')
 
       repository.add_to_repo(invoice_1)
       repository.add_to_repo(invoice_2)
@@ -36,29 +36,32 @@ RSpec.describe Repository do
   describe '#find_all_by_merchant_id' do
     it 'returns all instances with matching merchant id' do
       item_1 = double({
-            :id          => 1,
-            :name        => 'Pencil',
-            :description => 'You can use it to write things',
-            :unit_price  => '1099',
-            :created_at  => Time.now,
-            :updated_at  => Time.now,
-            :merchant_id => 2})
+                        id: 1,
+                        name: 'Pencil',
+                        description: 'You can use it to write things',
+                        unit_price: '1099',
+                        created_at: Time.now,
+                        updated_at: Time.now,
+                        merchant_id: 2
+                      })
       item_2 = double({
-            :id          => 2,
-            :name        => 'Pen',
-            :description => 'You can use it to permanently write things',
-            :unit_price  => '1299',
-            :created_at  => Time.now,
-            :updated_at  => Time.now,
-            :merchant_id => 7})
+                        id: 2,
+                        name: 'Pen',
+                        description: 'You can use it to permanently write things',
+                        unit_price: '1299',
+                        created_at: Time.now,
+                        updated_at: Time.now,
+                        merchant_id: 7
+                      })
       item_3 = double({
-            :id          => 3,
-            :name        => 'Stapler',
-            :description => 'Attaches pieces of paper together',
-            :unit_price  => '1999',
-            :created_at  => Time.now,
-            :updated_at  => Time.now,
-            :merchant_id => 7})
+                        id: 3,
+                        name: 'Stapler',
+                        description: 'Attaches pieces of paper together',
+                        unit_price: '1999',
+                        created_at: Time.now,
+                        updated_at: Time.now,
+                        merchant_id: 7
+                      })
       repository.add_to_repo(item_1)
       repository.add_to_repo(item_2)
       repository.add_to_repo(item_3)
