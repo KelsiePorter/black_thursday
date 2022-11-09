@@ -473,11 +473,11 @@ RSpec.describe SalesAnalyst do
       items_and_qty = sales_analyst.merchants_items_and_quantities_sold(12334236)
 
       expect(items_and_qty).to be_a Hash
-      items_and_qty.keys.each do |item|
+      items_and_qty.each_key do |item|
         expect(item).to be_a Item
       end
 
-      items_and_qty.values.each do |qty|
+      items_and_qty.each_value do |qty|
         expect(qty).to be_a Integer
       end
     end
@@ -493,7 +493,7 @@ RSpec.describe SalesAnalyst do
 
   describe '#items_and_dollar_amount_sold_for()' do
     it 'returns a hash of items and the dollar amount of items sold' do
-      sales_analyst.items_and_dollar_amount_sold_for(12334951).each do |item , dollar_amount|
+      sales_analyst.items_and_dollar_amount_sold_for(12334951).each do |item, dollar_amount|
         expect(item).to be_a Item
         expect(dollar_amount).to be_a BigDecimal
       end
