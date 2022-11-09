@@ -51,8 +51,8 @@ RSpec.describe MerchantRepository do
 
   describe '#find_by_name' do
     it 'can find merchant by name' do
-      merchant_1 = Merchant.new({id: 6, name: 'Walmart'})
-      merchant_2 = Merchant.new({id: 7, name: 'Target'})
+      merchant_1 = Merchant.new({ id: 6, name: 'Walmart' })
+      merchant_2 = Merchant.new({ id: 7, name: 'Target' })
       merchant_repository.add_to_repo(merchant_1)
       merchant_repository.add_to_repo(merchant_2)
 
@@ -120,9 +120,9 @@ RSpec.describe MerchantRepository do
       expect(merchant_repository.all[1].name).to eq('Walmart')
       expect(merchant_repository.all[2].name).to eq('Target')
 
-      merchant_repository.update( 1, { name: 'Costco' })
-      merchant_repository.update( 2, { name: "LaGree's" })
-      merchant_repository.update( 3, { name: 'Natural Grocers' })
+      merchant_repository.update(1, { name: 'Costco' })
+      merchant_repository.update(2, { name: "LaGree's" })
+      merchant_repository.update(3, { name: 'Natural Grocers' })
 
       expect(merchant_repository.all[0].name).to eq('Costco')
       expect(merchant_repository.all[1].name).to eq("LaGree's")

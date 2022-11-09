@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+
 require_relative 'repository'
 
 class MerchantRepository < Repository
-
   def find_by_name(name)
     @all.find do |merchant|
       merchant.name.downcase == name.downcase
@@ -16,9 +16,9 @@ class MerchantRepository < Repository
   end
 
   def update(id, attributes)
-      sanitized_attributes = {
+    sanitized_attributes = {
       name: attributes[:name]
-      }.compact
+    }.compact
     super(id, sanitized_attributes)
   end
 end

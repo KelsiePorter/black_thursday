@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+
 require_relative 'repository'
 
 class ItemRepository < Repository
-
   def find_by_name(name)
     @all.find do |item|
       item.name.downcase == name.downcase
@@ -35,9 +35,5 @@ class ItemRepository < Repository
       updated_at: Time.now
     }.compact
     super(id, sanitized_attributes)
-  end 
-
-  def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
   end
 end

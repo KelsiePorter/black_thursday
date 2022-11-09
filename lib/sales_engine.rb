@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 require_relative './merchant'
 require_relative './merchant_repository'
@@ -55,11 +57,12 @@ class SalesEngine
 
   def analyst
     SalesAnalyst.new(
-      @items, 
+      @items,
       @merchants,
       @invoices,
       @customers,
       @invoice_items,
-      @transactions)
+      @transactions
+    )
   end
 end

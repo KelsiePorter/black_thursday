@@ -23,5 +23,4 @@ class CustomerRepository < Repository
     }.compact
     super(id, sanitized_attributes)
   end
-
 end
