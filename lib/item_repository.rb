@@ -36,8 +36,4 @@ class ItemRepository < Repository
     }.compact
     super(id, sanitized_attributes)
   end
-
-  def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
-  end
 end
