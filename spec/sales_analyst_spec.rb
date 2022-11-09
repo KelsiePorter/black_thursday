@@ -380,7 +380,21 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.bottom_merchants_by_invoice_count).to include(merchant)
     end
   end
-  # need to write tests for invoice_days and max_invoices_in_a_day
+
+  describe '#invoice_days' do
+    it 'creates a hash that holds number of invoices for each day' do
+      expect(sales_analyst.invoice_days).to be_a Hash
+      expect(sales_analyst.invoice_days['Monday']).to eq(696)
+      expect(sales_analyst.invoice_days['Saturday']).to eq(729)
+    end
+  end
+
+  describe '#max_invoices_in_a_day' do
+    it 'returns the highest number of invoices in one day of the week' do
+      expect(sales_analyst.max_invoices_in_a_day).to eq(741)
+    end
+  end
+
   describe '#top_days_by_invoice_count' do
     it 'returns an array of days as strings that have most invoices in the week' do
       expect(sales_analyst.top_days_by_invoice_count).to eq ['Wednesday']
@@ -474,6 +488,15 @@ RSpec.describe SalesAnalyst do
       expect(sales_analyst.most_sold_items_for_merchant(12334236)).to be_a Array
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first.merchant_id).to eq(12334236)
       expect(sales_analyst.most_sold_items_for_merchant(12334236).first).to be_a Item
+    end
+  end
+
+  describe '#items_and_dollar_amount_sold_for()' do
+    it 'returns a hash of items and the dollar amount of items sold' do
+      sales_analyst.items_and_dollar_amount_sold_for(12334951).each do |item , dollar_amount|
+        expect(item).to be_a Item
+        expect(dollar_amount).to be_a BigDecimal
+      end
     end
   end
 
