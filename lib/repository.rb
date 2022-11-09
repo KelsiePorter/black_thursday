@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Repository
   attr_reader :all
 
@@ -28,7 +30,7 @@ class Repository
     (max.id + 1)
   end
 
-  #add tests
+  # add tests
   def create(attributes)
     attributes[:id] = max_id
     # Object.const_get() returns the class of the passed string, ie passing "Merchant" returns the Merchant Class

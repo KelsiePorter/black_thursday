@@ -4,37 +4,41 @@ require_relative '../lib/invoice'
 RSpec.describe InvoiceRepository do
   let(:invoice_repository) { InvoiceRepository.new }
 
-  let(:invoice_1) { Invoice.new({ id: 6,
-                                  customer_id: 7,
-                                  merchant_id: 8,
-                                  status: 'pending',
-                                  created_at: Time.now,
-                                  updated_at: Time.now
-                                }) }
+  let(:invoice_1) do
+    Invoice.new({ id: 6,
+                  customer_id: 7,
+                  merchant_id: 8,
+                  status: 'pending',
+                  created_at: Time.now,
+                  updated_at: Time.now })
+  end
 
-  let(:invoice_2) { Invoice.new({ id: 1,
-                                  customer_id: 2,
-                                  merchant_id: 3,
-                                  status: 'shipped',
-                                  created_at: Time.now,
-                                  updated_at: Time.now
-                                }) }
+  let(:invoice_2) do
+    Invoice.new({ id: 1,
+                  customer_id: 2,
+                  merchant_id: 3,
+                  status: 'shipped',
+                  created_at: Time.now,
+                  updated_at: Time.now })
+  end
 
-  let(:invoice_3) { Invoice.new({ id: 4,
-                                  customer_id: 2,
-                                  merchant_id: 3,
-                                  status: 'returned',
-                                  created_at: Time.now,
-                                  updated_at: Time.now
-                                }) }
+  let(:invoice_3) do
+    Invoice.new({ id: 4,
+                  customer_id: 2,
+                  merchant_id: 3,
+                  status: 'returned',
+                  created_at: Time.now,
+                  updated_at: Time.now })
+  end
 
-  let(:invoice_4) { Invoice.new({ id: 2,
-                                  customer_id: 8,
-                                  merchant_id: 5,
-                                  status: 'returned',
-                                  created_at: Time.now,
-                                  updated_at: Time.now
-                                }) }
+  let(:invoice_4) do
+    Invoice.new({ id: 2,
+                  customer_id: 8,
+                  merchant_id: 5,
+                  status: 'returned',
+                  created_at: Time.now,
+                  updated_at: Time.now })
+  end
 
   describe '#initialize' do
     it 'exist' do
@@ -115,7 +119,6 @@ RSpec.describe InvoiceRepository do
                                   created_at: Time.now,
                                   updated_at: Time.now })
 
-
       expect(invoice_repository.all[1].id).to eq(2)
       expect(invoice_repository.all.size).to eq(2)
     end
@@ -131,9 +134,9 @@ RSpec.describe InvoiceRepository do
       expect(invoice_repository.all[1].status).to eq(:shipped)
       expect(invoice_repository.all[2].status).to eq(:returned)
 
-      invoice_repository.update( 6, {status: 'Canceled'})
-      invoice_repository.update( 1, {status: 'Returned'})
-      invoice_repository.update( 4, {status: 'Shipped'})
+      invoice_repository.update(6, { status: 'Canceled' })
+      invoice_repository.update(1, { status: 'Returned' })
+      invoice_repository.update(4, { status: 'Shipped' })
 
       expect(invoice_repository.all[0].status).to eq('Canceled')
       expect(invoice_repository.all[1].status).to eq('Returned')
@@ -157,12 +160,10 @@ RSpec.describe InvoiceRepository do
       expect(invoice_repository.all.size).to eq(1)
     end
 
-
-   it 'cannot delete an id that does not exist' do
+    it 'cannot delete an id that does not exist' do
       invoice_repository.add_to_repo(invoice_1)
       invoice_repository.add_to_repo(invoice_2)
       invoice_repository.add_to_repo(invoice_3)
-
 
       expect(invoice_repository.all.size).to eq(3)
 
