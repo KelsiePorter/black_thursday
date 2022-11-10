@@ -7,6 +7,9 @@ Working with the CSV was a big challenge, we spent quite a bit of time on `from_
 
 With the scope of this project and splitting up work, it was difficult to maintain an understanding of the connections between different pieces of data.
 
+![alt text](https://i.ibb.co/HrRCgjX/Screen-Shot-2022-11-08-at-9-39-12-PM.png "Database Design Diagram")
+We used db designer to model the classes for all of the items. This helped with accessing different data elements “through” various classes and recognizing their relationships to one another.
+
 #### **2. What was the most exciting aspect of this project?**
 
 Utilizing and implementing inheritance/modules was exciting and solidified the concept. 
